@@ -18,11 +18,5 @@ namespace locadora.Controllers
             _logger = logger;
             
         }
-
-        [HttpGet(Name = "GetWeatherForecast")]
-        public string Get()
-        {
-            return "Oi lucassss";
-        }
     }
 }
