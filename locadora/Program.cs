@@ -10,7 +10,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 //Add dbContext to application
-string _cnString = builder.Configuration.GetConnectionString("MySqlConnectionString");
+
+var _config = builder.Configuration;
+var dbHost = _config["DBHOST"] ?? "localhost";
+var dbPort = _config["DBPORT"] ?? "3306";
+var dbUser = _config["MYSQL_USER"] ?? _config.GetConnectionString("MYSQL_USER") ;
+var dbPw = _config["MYSQL_PASSWORD"] ?? _config.GetConnectionString("MYSQL_PW");
+var dbName = _config["MYSQL_DATABASE"] ?? _config.GetConnectionString("MYSQL_DATABASE");
+
+string _cnString = $"server={dbHost}; Port={dbPort}; database={dbName}; Uid={dbUser}; Pwd={dbPw}";
 
 builder.Services.AddDbContext<LocadoraContext>(
         opts => opts.UseMySql(

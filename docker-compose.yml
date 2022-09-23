@@ -1,0 +1,29 @@
+version: '3.4'
+
+
+volumes:
+  datafiles:
+
+services:
+    database:
+        image: mysql:latest
+        ports:
+            - "3306:3306"
+        volumes:
+            - datafiles:/var/lib/mysql
+        restart: always
+        environment: 
+            MYSQL_ROOT_PASSWORD: Root@01
+            MYSQL_USER: gerente-locadora
+            MYSQL_PASSWORD: Locadora@2022
+            MYSQL_DATABASE: Locadora
+    locadora:
+        image: ${DOCKER_REGISTRY-}locadora
+        build:
+            context: .
+            dockerfile: locadora/Dockerfile
+        depends_on: 
+            - database
+        environment: 
+            - DBHOST=database
+            - ASPNETCORE_ENVIRONMENT=Development
