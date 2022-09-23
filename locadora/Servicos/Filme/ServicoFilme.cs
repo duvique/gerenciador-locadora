@@ -1,6 +1,8 @@
 ﻿using locadora.Database;
 using FilmeModel = locadora.Entities.Filme;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using locadora.Helpers;
 
 namespace locadora.Servicos.Filme
 {
@@ -41,10 +43,34 @@ namespace locadora.Servicos.Filme
         {
             try
             {
-                /// Unfinished
-                var filmeAdicionado =  await _context.Filmes.AddAsync(filme);
+                var insertInfo =  await _context.Filmes.AddAsync(filme);
 
-                return filmeAdicionado.Entity;
+                if(insertInfo.State == EntityState.Added)
+                {
+                    await _context.SaveChangesAsync();
+                }
+
+                return insertInfo.Entity;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<FilmeModel> UpdateFilme(int id, FilmeModel filme)
+        {
+            try
+            {
+
+                var filmeParaAtualizar = await _context.Filmes.FindAsync(id);
+                if (filmeParaAtualizar is not null)
+                {
+                    Mapper.Map(filmeParaAtualizar, filme, _context);
+                    await _context.SaveChangesAsync();
+                }
+
+                return filmeParaAtualizar;
             }
             catch (Exception)
             {

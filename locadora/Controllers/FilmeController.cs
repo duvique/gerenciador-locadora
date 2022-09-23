@@ -12,9 +12,11 @@ namespace locadora.Controllers
     public class FilmeController : ControllerBase
     {
         private readonly ServicoFilme _service;
-        public FilmeController(LocadoraContext context)
+        private readonly IHttpContextAccessor _httpContext;
+        public FilmeController(LocadoraContext context, IHttpContextAccessor httpContext)
         {
             _service = new ServicoFilme(context);
+            _httpContext = httpContext;
         }
 
 
@@ -33,9 +35,17 @@ namespace locadora.Controllers
         }
 
         [HttpPost]
-        public async Task<Filme> PostFilme(Filme filme)
+        public async Task<ActionResult<Filme>> PostFilme(Filme filme)
         {
-            return (await _service.InsertFilme(filme));
+            var novoFilme = await _service.InsertFilme(filme);
+            return Created($"{_httpContext.HttpContext?.Request.Host.Value}/api/filme/{novoFilme.Id}", novoFilme);
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<Filme> PutFilme([FromRoute] int id, [FromBody] Filme filme)
+        {
+            return (await _service.UpdateFilme(id, filme));
         }
 
 

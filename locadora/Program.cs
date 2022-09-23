@@ -26,6 +26,7 @@ builder.Services.AddDbContext<LocadoraContext>(
             ServerVersion.AutoDetect(_cnString)
         )
 );
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

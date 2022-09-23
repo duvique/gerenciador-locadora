@@ -10,9 +10,11 @@ namespace locadora.Entities
 
         [StringLength(100)]
         public string Titulo { get; set; }
-        public int ClassificacaoIndicativa { get; set; }
 
-        public byte Lancamento { get; set; }
+   
+        public int? ClassificacaoIndicativa { get; set; }
+
+        public byte? Lancamento { get; set; }
 
     }
 }
