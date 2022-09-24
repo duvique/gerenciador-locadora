@@ -11,5 +11,8 @@ namespace locadora.Servicos.Filme
         public Task<FilmeModel> InsertFilme(FilmeModel filme);
 
         public Task<FilmeModel> UpdateFilme(int id, FilmeModel filme);
+
+        public Task<FilmeModel> DeleteFilme(int id);
+
     }
 }

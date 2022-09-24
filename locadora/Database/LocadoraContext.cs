@@ -12,11 +12,19 @@ namespace locadora.Database
         }
 
         public DbSet<Filme> Filmes { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Locacao> Locacoes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Filme>().ToTable("Filme");
+            modelBuilder.Entity<Cliente>().ToTable("Cliente")
+                .HasIndex((c) => c.CPF)
+                .IsUnique();
+            modelBuilder.Entity<Locacao>().ToTable("Locacao");
         }
+
+
     }
 }

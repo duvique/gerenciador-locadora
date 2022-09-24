@@ -1,7 +1,12 @@
 using locadora.Database;
+using locadora.Servicos.Cliente;
+using locadora.Servicos.Filme;
+using locadora.Servicos.Locacao;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,28 +31,47 @@ builder.Services.AddDbContext<LocadoraContext>(
             ServerVersion.AutoDetect(_cnString)
         )
 );
+
+// Cusom entities services
+
+builder.Services.AddScoped<IServicoFilme, ServicoFilme>();
+builder.Services.AddScoped<IServicoCliente, ServicoCliente>();
+builder.Services.AddScoped<IServicoLocacao, ServicoLocacao>();
+
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddControllers();
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
+
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+    });
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseExceptionHandler("/error");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
+    //app.UseExceptionHandler("/error");
+    //app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 else
 {
-    app.UseExceptionHandler("/Error");
+    //app.UseExceptionHandler("/error");
     app.UseHsts();
   
 }

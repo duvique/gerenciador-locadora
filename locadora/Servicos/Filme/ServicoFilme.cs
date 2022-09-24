@@ -14,7 +14,9 @@ namespace locadora.Servicos.Filme
         {
             _context = context;
         }
-        public async Task<Entities.Filme> GetFilme(int id)
+
+        #region CRUD
+        public async Task<FilmeModel> GetFilme(int id)
         {
             try
             {
@@ -27,7 +29,7 @@ namespace locadora.Servicos.Filme
             }
         }
 
-        public async Task<List<Entities.Filme>> GetFilmes()
+        public async Task<List<FilmeModel>> GetFilmes()
         {
             try
             {
@@ -77,5 +79,31 @@ namespace locadora.Servicos.Filme
                 throw;
             }
         }
+
+        public async Task<FilmeModel> DeleteFilme(int id)
+        {
+            try
+            {
+
+                var filme = await _context.Filmes.FirstOrDefaultAsync(f => f.Id == id);
+
+                if (filme is not null)
+                {
+                    _context.Filmes.Remove(filme);
+                    await _context.SaveChangesAsync();
+
+                }
+
+                return filme;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
+        }
+        #endregion
+
     }
 }

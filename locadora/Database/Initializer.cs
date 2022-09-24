@@ -27,6 +27,27 @@ namespace locadora.Database
             };
 
             context.Filmes.AddRange(filmesDefault);
+
+            if (context.Clientes.Any()) return;
+
+            var clientesDefault = new Cliente[]
+            {
+                   new Cliente
+                   {
+                       Nome = "João",
+                       CPF = "04392817284",
+                       DataNascimento = Convert.ToDateTime("1979-05-14"),
+                   },
+                   new Cliente
+                   {
+                       Nome = "Pedro Nunes",
+                       CPF = "19286065482",
+                       DataNascimento = Convert.ToDateTime("1997-09-03"),
+                   }
+            };
+
+            context.Clientes.AddRange(clientesDefault);
+
             context.SaveChanges();
 
         }

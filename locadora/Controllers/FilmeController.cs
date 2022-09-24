@@ -1,4 +1,5 @@
-﻿using locadora.Database;
+﻿using FluentValidation.AspNetCore;
+using locadora.Database;
 using locadora.Entities;
 using locadora.Servicos.Filme;
 using Microsoft.AspNetCore.Http;
@@ -11,27 +12,34 @@ namespace locadora.Controllers
     [ApiController]
     public class FilmeController : ControllerBase
     {
-        private readonly ServicoFilme _service;
+        private readonly IServicoFilme _service;
         private readonly IHttpContextAccessor _httpContext;
-        public FilmeController(LocadoraContext context, IHttpContextAccessor httpContext)
+        public FilmeController(IServicoFilme servico, IHttpContextAccessor httpContext)
         {
-            _service = new ServicoFilme(context);
+            _service = servico;
             _httpContext = httpContext;
         }
 
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<Filme> Get(int id)
+        public async Task<ActionResult<Filme>> Get(int id)
         {
-            return (await _service.GetFilme(id));
+            var filme = await _service.GetFilme(id);
+
+            if (filme == null)
+            {
+                return NotFound();
+            }
+
+            return filme;
         }
 
         [HttpGet]
         [Route("list")]
         public async Task<List<Filme>> GetFilmes()
         {
-            return (await _service.GetFilmes());
+            return await _service.GetFilmes();
         }
 
         [HttpPost]
@@ -43,9 +51,28 @@ namespace locadora.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<Filme> PutFilme([FromRoute] int id, [FromBody] Filme filme)
+        public async Task<ActionResult<Filme>> PutFilme([FromRoute] int id, Filme filme)
         {
-            return (await _service.UpdateFilme(id, filme));
+            if (id != filme.Id)
+            {
+                return BadRequest(new { message = "Invalid Movie Id" });
+            }
+
+            return Ok(await _service.UpdateFilme(id, filme));
+
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteFilme(int id)
+        {
+            var filme = await _service.DeleteFilme(id);
+
+            if (filme == null)
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
 
 
