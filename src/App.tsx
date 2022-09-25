@@ -1,25 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Layout } from 'antd';
 import './App.css';
+import Header from './Components/Header';
+import Sidebar from './Components/Sidebar';
+import Content from './Components/Content';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Filmes from './Components/Filmes';
+import Home from './Components/Home';
+import FilmeForm from './Components/FilmeForm';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+          <Route path='/' element={<Home/>}>
+            <Route path='filmes' element={<Filmes/>}/>
+            <Route path='filmes/:id' element={<FilmeForm/>}/>
+            <Route path='filmes/create' element={<FilmeForm/>}/>
+          </Route>
+
+          
+      </Routes>
+
+      
+    
+    </Router>
   );
 }
 
