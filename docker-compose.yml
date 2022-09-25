@@ -6,7 +6,7 @@ volumes:
 
 services:
     site:
-        image: teste-react
+        image: website-react
         ports:
             - "5300:3000"
         depends_on:
