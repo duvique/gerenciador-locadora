@@ -15,13 +15,25 @@ namespace locadora.Database
                 new Filme()
                 {
                     Titulo= "A volta dos que não foram",
-                    ClassificacaoIndicativa= 12,
+                    ClassificacaoIndicativa= 10,
                     Lancamento = false
                 },
                 new Filme()
                 {
-                    Titulo= "As tranças do rei careca",
+                    Titulo= "Os vingadores",
                     ClassificacaoIndicativa= 18,
+                    Lancamento = true
+                },
+                new Filme()
+                {
+                    Titulo= "O lobo de Wall Street",
+                    ClassificacaoIndicativa= 18,
+                    Lancamento = true
+                },
+                new Filme()
+                {
+                    Titulo= "Clube da luta",
+                    ClassificacaoIndicativa= 16,
                     Lancamento = true
                 },
             };

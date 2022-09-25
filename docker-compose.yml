@@ -5,6 +5,14 @@ volumes:
   datafiles:
 
 services:
+    site:
+        image: teste-react
+        ports:
+            - "5300:3000"
+        depends_on:
+            - locadora
+        environment:
+            - REACT_APP_API_URL=https://localhost:5001/api/
     locadora:
         image: ${DOCKER_REGISTRY-}locadora 
         ports:
