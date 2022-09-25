@@ -16,7 +16,7 @@ namespace locadora.Helpers
             foreach (var prop in properties)
             {
                 var value = prop.GetValue(source, null);
-                if(value is not null && prop.GetValue(target,null) != value && (primaryKeyName is null ? false : prop.Name != primaryKeyName ))
+                if(value is not null && prop.GetValue(target,null) != value && (primaryKeyName is null ? false : prop.Name != primaryKeyName ) && prop.GetSetMethod() is not null)
                 {
                     prop.SetValue(target, value, null);
                 }

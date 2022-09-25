@@ -20,19 +20,25 @@ namespace locadora.Entities
         public string CPF { get; set; }
 
         [Required]
-        public DateTime DataNascimento { get; set; }
+        public DateTime? DataNascimento { get; set; }
 
         [NotMapped]
-        public int Idade { get {
+        public int? Idade
+        {
+            get
+            {
                 var dataHoje = DateTime.Today;
 
-                var idade = dataHoje.Year - DataNascimento.Year;
+                if (DataNascimento is null) return null;
+                var idade = dataHoje.Year - DataNascimento.Value.Year;
 
-                if (DataNascimento.Date > dataHoje.AddYears(-idade)) idade--;
+                if (DataNascimento.Value.Date > dataHoje.AddYears(-idade)) idade--;
 
                 return idade;
 
-            } }
+            }
+           
+        }
         public List<Locacao> Locacoes { get; set; } = new List<Locacao>();
     }
 }

@@ -10,6 +10,20 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var corsPolicy = "_policy";
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(corsPolicy,
+                          policy =>
+                          {
+                              policy.WithOrigins("*")
+                                                  .AllowAnyHeader()
+                                                  .AllowAnyMethod();
+                          });
+});
+
 
 
 // Add services to the container.
@@ -88,6 +102,9 @@ using (var scope = app.Services.CreateScope())
 
 
 app.UseHttpsRedirection();
+
+app.UseCors(corsPolicy);
+
 
 app.UseAuthorization();
 

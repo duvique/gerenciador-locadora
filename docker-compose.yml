@@ -5,6 +5,20 @@ volumes:
   datafiles:
 
 services:
+    locadora:
+        image: ${DOCKER_REGISTRY-}locadora 
+        ports:
+            - "5000:5000"
+            - "5001:5001"
+        build:
+            context: .
+            dockerfile: locadora/Dockerfile
+        depends_on: 
+            - database
+        environment: 
+            - ASPNETCORE_URLS=http://*:5000
+            - DBHOST=database
+            - ASPNETCORE_ENVIRONMENT=Development
     database:
         image: mysql:latest
         ports:
@@ -17,13 +31,4 @@ services:
             MYSQL_USER: gerente-locadora
             MYSQL_PASSWORD: Locadora@2022
             MYSQL_DATABASE: Locadora
-    locadora:
-        image: ${DOCKER_REGISTRY-}locadora
-        build:
-            context: .
-            dockerfile: locadora/Dockerfile
-        depends_on: 
-            - database
-        environment: 
-            - DBHOST=database
-            - ASPNETCORE_ENVIRONMENT=Development
+    

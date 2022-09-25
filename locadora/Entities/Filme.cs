@@ -14,7 +14,7 @@ namespace locadora.Entities
    
         public int? ClassificacaoIndicativa { get; set; }
 
-        public byte? Lancamento { get; set; }
+        public bool? Lancamento { get ; set; }
 
     }
 }

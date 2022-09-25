@@ -1,4 +1,5 @@
 ﻿using locadora.Database;
+using locadora.Entities;
 using locadora.Helpers;
 using Microsoft.EntityFrameworkCore;
 using LocacaoModel = locadora.Entities.Locacao;
@@ -19,7 +20,18 @@ namespace locadora.Servicos.Locacao
         {
             try
             {
-                return await _context.Locacoes.FirstOrDefaultAsync(l => l.Id == id);
+               
+                var locacao =  await _context.Locacoes.FirstOrDefaultAsync(l => l.Id == id);
+                if(locacao is null)
+                {
+                    throw new HttpException(System.Net.HttpStatusCode.NotFound, $"Locaçção de Id '{id}' não foi encontrada");
+                }
+
+                var filme = await _context.Filmes.FindAsync(locacao?.FilmeId);
+                var cliente = await _context.Clientes.IgnoreAutoIncludes().SingleOrDefaultAsync(c => c.Id == locacao.ClienteId);
+                cliente.Locacoes = null;
+                return locacao;
+                
             }
             catch (Exception)
             {
@@ -52,8 +64,8 @@ namespace locadora.Servicos.Locacao
                     throw new HttpException(System.Net.HttpStatusCode.NotFound, $"O {(filme is null ? "filme" : "cliente")} informado não existe");
                 }
 
-                locacao.DataDevolucao = locacao.DataLocacao?.AddDays(filme.Lancamento > 0 ? 2 : 3);
-
+                locacao.DataDevolucao = locacao.DataLocacao?.AddDays(filme.Lancamento!.Value ? 2 : 3);
+                locacao.Devolvido = false;
                 var insertInfo = await _context.Locacoes.AddAsync(locacao);
 
                 if (insertInfo.State == EntityState.Added)

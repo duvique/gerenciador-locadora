@@ -23,5 +23,7 @@ namespace locadora.Entities
 
         [Required]
         public DateTime? DataDevolucao { get; set; }
+
+        public bool Devolvido { get; set; }
     }
 }

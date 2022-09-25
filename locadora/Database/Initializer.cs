@@ -16,13 +16,13 @@ namespace locadora.Database
                 {
                     Titulo= "A volta dos que não foram",
                     ClassificacaoIndicativa= 12,
-                    Lancamento = 1
+                    Lancamento = false
                 },
                 new Filme()
                 {
                     Titulo= "As tranças do rei careca",
                     ClassificacaoIndicativa= 18,
-                    Lancamento = 1
+                    Lancamento = true
                 },
             };
 
