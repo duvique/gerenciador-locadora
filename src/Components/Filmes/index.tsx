@@ -13,23 +13,25 @@ export interface IFilme {
   classificacaoIndicativa : number;
 }
 
+export const fetchFilmes = async (setAction : React.Dispatch<React.SetStateAction<IFilme[] | undefined>>) =>{
+  try{
+    const { data } = await LocadoraAPI.get('filme/list');
+    setAction(data)
+  }catch(e){
+    message.error(`Não foi possivel buscar os filmes`);
+  }
+}
+
 const Filmes = () =>{
-  const [filmes, setFilmes] = useState<IFilme[]>([]);
+  const [filmes, setFilmes] = useState<IFilme[] | undefined>([]);
   const navigate = useNavigate();
 
-  const fetchFilmes = async () =>{
-    try{
-      const { data } = await LocadoraAPI.get('filme/list');
-      setFilmes(data)
-    }catch(e){
-      message.error(`Não foi possivel buscar os filmes`);
-    }
-  }
+  
 
   
 
   useEffect(() =>{
-    fetchFilmes()
+    fetchFilmes(setFilmes)
   },[]);
   return (
     <PageContent>
@@ -37,13 +39,13 @@ const Filmes = () =>{
       <Divider plain>Filmes</Divider>
       <AlignedButton>
         <Tooltip title="Novo filme">
-          <Button onClick={() => navigate('create')} type="primary" shape="circle" icon={<PlusOutlined />} />
+          <Button onClick={() => navigate('/filme')} type="primary" shape="circle" icon={<PlusOutlined />} />
         </Tooltip>
       </AlignedButton>
       
       <GridContainer >
         {
-          filmes.map((filme : IFilme) => <FilmeCard key={`${filme.id}-card`} filme={filme}/>)
+          filmes?.map((filme : IFilme) => <FilmeCard reFetch={() => fetchFilmes(setFilmes)} key={`${filme.id}-card`} filme={filme}/>)
         }
       </GridContainer>
     </PageContent>

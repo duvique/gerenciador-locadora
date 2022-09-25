@@ -17,10 +17,10 @@ const Sidebar = () => {
         <Link to='/filmes'>Filmes</Link>
         </StyledMenuItem>
         <StyledMenuItem key='Clientes'>
-          Clientes
+          <Link to='/clientes'>Clientes</Link>
         </StyledMenuItem>
         <StyledMenuItem key='Locacoes'>
-          Locações
+          <Link to='/locacoes'>Locações</Link>
         </StyledMenuItem>
       </StyledMenu>
     </StyledSider>

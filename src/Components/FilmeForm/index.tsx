@@ -15,7 +15,6 @@ const FilmeForm = () => {
   const [classificacao, setClassificacao] = useState<number | undefined>(undefined);
   const [lancamento, setLancamento] = useState<boolean | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
-  console.log({classificacao});
   
   const fetchFilme = async () => {
     try{
@@ -27,6 +26,7 @@ const FilmeForm = () => {
       message.error(`Não foi possivel carregar as informações`);
     }
   }
+
 
   useEffect(()=>{
      id && fetchFilme();  
@@ -42,7 +42,7 @@ const FilmeForm = () => {
           id,
           titulo: titulo || null,
           classificacaoIndicativa: classificacao || null,
-          lancamento: lancamento || null,
+          lancamento: lancamento === undefined ?  null : lancamento,
         })
 
         if(data){
@@ -53,7 +53,6 @@ const FilmeForm = () => {
       }
       
   }
-
   const handleCreate = async (e : any) => {
     try{
       setLoading(true);
@@ -65,7 +64,7 @@ const FilmeForm = () => {
 
       if(response?.status === 201 && response?.data){
         message.success("Filme criado");
-        navigate(`/filme/${response.data.id}`)
+        navigate(`${response.data.id}`)
       }
     }catch(e){
       message.error(`Erro ao cadastrar filme`);
@@ -101,7 +100,8 @@ const FilmeForm = () => {
         </Form.Item>
 
         <Form.Item valuePropName="checked" initialValue={filme?.lancamento} label='Lançamento' name='lancamento'>
-          <Checkbox checked={lancamento} onChange={({target: {checked}}) => setLancamento(checked)}/>
+          <Checkbox checked={lancamento} onChange={({target: {checked}}) => setLancamento(checked)
+          }/>
         </Form.Item>
 
         <Form.Item>
