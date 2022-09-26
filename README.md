@@ -57,11 +57,24 @@ Com isso, o website ja deverá estar rodando na porta padrão do React `3000`.
 
 > Não se esqueça de modificar a variável de ambiente no arquivo `.env.example` apagando o `.example` e inserindo a url da sua API rodando localmente.
 
-## Postman Workspace
- `https://www.postman.com/duvique/workspace/locadora`
+## Postman
+
+Workspace: `https://www.postman.com/duvique/workspace/locadora`
+
+Existem as seguintes variáveis em uso:
+* `url`: corresponde à url da API incluindo '/api' no final
+* `controller`: corresponde ao nome do controller, o seu escopo é por colletion, o que significa que em cada collection é necessário definir esta variável de acordo com as requisições que estão sendo feitas.
 
 
+Controllers disponíveis:
+* `cliente`
+* `filme`
+* `locacao`
+* `relatorio`
+
+
+
+## 🤝 Obrigado
 
 Pretendo aperfeiçoar mais este projeto futuramente, até breve!
 
-## 🤝 Obrigado
