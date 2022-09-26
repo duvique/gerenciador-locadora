@@ -57,6 +57,9 @@ Com isso, o website ja deverá estar rodando na porta padrão do React `3000`.
 
 > Não se esqueça de modificar a variável de ambiente no arquivo `.env.example` apagando o `.example` e inserindo a url da sua API rodando localmente.
 
+## Postman Workspace
+ `https://www.postman.com/duvique/workspace/locadora`
+
 
 
 Pretendo aperfeiçoar mais este projeto futuramente, até breve!
