@@ -26,3 +26,38 @@ export const classificacoes : IClassificacao[] =[
     value: 18,
   }
 ] 
+
+interface IReportOption{
+  label: string;
+  value: string;
+  columnType: string;
+}
+
+export const reportOptions : IReportOption[] = [
+
+  {
+    label: 'Clientes em atraso',
+    value: 'clientesEmAtraso',
+    columnType: 'cliente'
+  },
+  {
+    label: 'Filmes não alugados',
+    value: 'filmesNaoAlugados',
+    columnType: 'filme'
+  },
+  {
+    label: '5 filmes mais alugados',
+    value: 'cincoMaisAlugados',
+    columnType: 'filme'
+  },
+  {
+    label: '3 filmes menos alugados na última semana',
+    value: 'tresMenosAlugadosSemana',
+    columnType: 'filme'
+  },
+  {
+    label: '2° cliente que mais alugou',
+    value: 'segundoClienteMaisAlugou',
+    columnType: 'cliente'
+  },
+]

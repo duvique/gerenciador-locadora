@@ -135,8 +135,9 @@ const ClienteForm = () => {
         <Form.Item required initialValue={cliente?.cpf} label='CPF' name='cpf'>
           <Input 
             value={nome} 
-            onChange={({ target: { value } }) => setCpf(value)}
+            onChange={({ target: { value } }) => setCpf(value) }
             placeholder='XXXXXXXXXXX'
+            maxLength={11}            
           />
         </Form.Item>
 

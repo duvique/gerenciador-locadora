@@ -12,12 +12,15 @@ import Clientes from './Components/Cliente/ListaClientes';
 import ClienteForm from './Components/Cliente/ClienteForm';
 import Locacoes from './Components/Locacao/ListaLocacao';
 import LocacaoForm from './Components/Locacao/LocacaoForm';
+import Relatorios from './Components/Relatorios';
 
 function App() {
   return (
     <Router>
       <Routes>
           <Route path='/' element={<Home/>}>
+            <Route path='' element={<Relatorios/>}/>
+            
             <Route path='filmes' element={<Filmes/>}/>
             <Route path='filme' element={<FilmeForm/>}/>
             <Route path='filme/:id' element={<FilmeForm/>}/>
@@ -30,12 +33,7 @@ function App() {
             <Route path='locacao' element={<LocacaoForm/>}/>
             <Route path='locacao/:id' element={<LocacaoForm/>}/>
           </Route>
-
-          
       </Routes>
-
-      
-    
     </Router>
   );
 }
