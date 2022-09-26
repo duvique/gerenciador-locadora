@@ -12,17 +12,22 @@ namespace locadora.Servicos.Relatorio
         {
             _context = context;     
         }
-        public async Task<IEnumerable<Entities.Cliente>> ClientesEmAtraso()
+        public async Task<IEnumerable<Object>> ClientesEmAtraso()
         {
 
 
             try
             {
-                var clientes = await _context.Clientes
-                    .AsNoTracking()
-                    .Include(c => c.Locacoes)
-                    .Where(c => c.Locacoes.Any(l => DateTime.Today > l.DataDevolucao))
-                    .ToListAsync();
+
+                var clientes =  await _context.Locacoes
+                   .Include(l => l.Cliente)
+                   .Select(l => new { Cliente = l.Cliente, DataDevolucao =  l.DataDevolucao})
+                   .Where(obj => DateTime.Today > obj.DataDevolucao)
+                   .GroupBy(c => c.Cliente.Id)
+                   .Select(group => new { atrasos = group.Count(), Cliente = group.FirstOrDefault().Cliente })
+                   .OrderByDescending(x => x.atrasos)
+                   .ToListAsync();
+                ;
 
                 return clientes;
             }

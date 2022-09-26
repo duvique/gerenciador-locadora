@@ -1,10 +1,9 @@
-﻿using ClienteModel  = locadora.Entities.Cliente;
-
+﻿
 namespace locadora.Servicos.Relatorio
 {
     public interface IServicoRelatorio
     {
-        public Task<IEnumerable<ClienteModel>> ClientesEmAtraso();
+        public Task<IEnumerable<Object>> ClientesEmAtraso();
 
         public Task<IEnumerable<Entities.Filme>> FilmesNaoAlugados();
 
