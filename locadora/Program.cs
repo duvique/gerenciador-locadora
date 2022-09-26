@@ -2,6 +2,7 @@ using locadora.Database;
 using locadora.Servicos.Cliente;
 using locadora.Servicos.Filme;
 using locadora.Servicos.Locacao;
+using locadora.Servicos.Relatorio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
@@ -51,6 +52,7 @@ builder.Services.AddDbContext<LocadoraContext>(
 builder.Services.AddScoped<IServicoFilme, ServicoFilme>();
 builder.Services.AddScoped<IServicoCliente, ServicoCliente>();
 builder.Services.AddScoped<IServicoLocacao, ServicoLocacao>();
+builder.Services.AddScoped<IServicoRelatorio, ServicoRelatorio>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
