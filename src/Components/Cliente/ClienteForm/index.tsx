@@ -136,7 +136,7 @@ const ClienteForm = () => {
           <Input 
             value={nome} 
             onChange={({ target: { value } }) => setCpf(value)}
-            placeholder='XXX.XXX.XXX-XX'
+            placeholder='XXXXXXXXXXX'
           />
         </Form.Item>
 
